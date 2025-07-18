@@ -8,7 +8,7 @@ const inter2 = Inter({ subsets: ['latin'], style: 'normal', display: 'swap' });
 
 export default function Pricing() {
   return (
-    <header className='bg-[#ffffff] w-full min-h-screen flex flex-col pt-10 px-5'>
+    <header className='bg-[#ffffff] w-full py-20 md:py-10 flex flex-col pt-10 px-5'>
       <div className='flex items-center justify-center flex-col text-center mb-10'>
         <h2 className={`${inter.className} text-3xl md:text-6xl font-bold mt-2 mb-4 font-col`}>
           Simple, Transparent Pricing
@@ -18,7 +18,7 @@ export default function Pricing() {
         </h3>
       </div>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4  ' >
 
         {/* Free Plan */}
         <div className='p-6 border border-gray-800 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer flex flex-col items-center gap-4'>

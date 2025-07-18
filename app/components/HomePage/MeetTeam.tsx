@@ -8,7 +8,7 @@ const inter2 = Inter({ subsets: ['latin'], style: 'normal', display: 'swap' });
 
 export default function MeetTeam() {
   return (
-    <section className='bg-white w-full min-h-screen flex flex-col items-center px-4 py-10 md:py-20'>
+    <section className='bg-white w-full  flex flex-col items-center px-4 py-20 md:py-10'>
       <h3 className={`${inter.className} text-3xl md:text-6xl font-bold mt-2 mb-4 font-col`}>
         Meet Our Team
       </h3>
@@ -16,7 +16,7 @@ export default function MeetTeam() {
         From classroom chaos to coding clarity — we’re students on a mission to make learning simpler and fun with Askra!
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl px-2 md:px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl px-4">
         <TeamCard
           imgSrc="/subham.png"
           name="Subham Kumar"

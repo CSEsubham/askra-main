@@ -8,7 +8,7 @@ import Footer from '../Footer'
 
 export default function HomeLayout() {
   return (
-     <main className="overflow-x-hidden w-screen">
+     <main className="overflow-y-hidden w-screen">
       <Header />
       <BodyPage />
       <WhyAskra />
