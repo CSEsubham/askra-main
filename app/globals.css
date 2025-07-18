@@ -1,2 +1,96 @@
 @import "tailwindcss";
 
+.Logo-Animation:after {
+    content: "";
+    position: absolute;
+    bottom: 11%;
+    right: -10%;
+    width: 40px;
+    height: 80px;
+    border: 8px solid #8e2de2;
+    border-top: none;
+    border-left: none;
+    border-radius: 0 0 50px 50px;
+    transform: translateY(-50px) scale(0.8) rotate(-20deg);
+    opacity: 0;
+    animation: uShapeBounce 2.5s ease-in-out forwards;
+}
+
+/* Animation Timeline */
+@keyframes uShapeBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8) rotate(-20deg);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(0px) scale(1.1) rotate(5deg);
+    }
+    60% {
+        transform: translateY(-10px) scale(0.95) rotate(-5deg);
+    }
+    80% {
+        transform: translateY(5px) scale(1.05) rotate(3deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px) scale(1) rotate(0deg);
+    }
+}
+.background-col{
+    background: linear-gradient(to right,#F3E8FF,#ffffff,#E9D5FF);
+}
+
+.Navbartag-ani::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: black;
+    opacity: 0;
+    transition: none;
+}
+
+.Navbartag-ani:hover::before {
+    animation: navbarSlide 2s ease-in-out 1;
+}
+
+@keyframes navbarSlide {
+    0% {
+        width: 0%;
+        opacity: 0;
+    }
+    30% {
+        width: 100%;
+        opacity: 1;
+    }
+    70% {
+        width: 25%;
+        opacity: 0;
+    }
+    100% {
+        width: 0%;
+        opacity: 0;
+    }
+}
+
+.fontCol{
+    background: linear-gradient(to right, #9333EA, #4F46E5, #14B8A6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* for Firefox */
+    color: transparent;
+    text-shadow: 0 4px 12px rgba(147, 51, 234, 0.4),  /* purple soft glow */
+                 0 2px 8px rgba(79, 70, 229, 0.3),    /* blue mid glow */
+                 0 1px 6px rgba(20, 184, 166, 0.3); 
+
+}
+.font-col{
+    background: linear-gradient(to right, #9333EA, #4F46E5, #14B8A6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* for Firefox */
+    color: transparent;
+}
