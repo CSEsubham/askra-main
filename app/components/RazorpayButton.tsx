@@ -1,6 +1,5 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
 import { useEffect } from 'react';
 
 interface RazorpayButtonProps {
@@ -9,7 +8,6 @@ interface RazorpayButtonProps {
 }
 
 export default function RazorpayButton({ amount, planName }: RazorpayButtonProps) {
-  const { isSignedIn, user } = useUser();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -19,7 +17,12 @@ export default function RazorpayButton({ amount, planName }: RazorpayButtonProps
   }, []);
 
   const handlePayment = async () => {
-    if (!user) return;
+    // TODO: Replace with Supabase auth user info
+    const user = {
+      id: 'user-id-placeholder',
+      fullName: 'User Name',
+      email: 'user@example.com',
+    };
 
     try {
       const res = await fetch('/api/razorpay/order', {
@@ -31,7 +34,7 @@ export default function RazorpayButton({ amount, planName }: RazorpayButtonProps
           amount,
           userId: user.id,
           name: user.fullName,
-          email: user.primaryEmailAddress?.emailAddress,
+          email: user.email,
           plan: planName,
         }),
       });
@@ -53,9 +56,9 @@ export default function RazorpayButton({ amount, planName }: RazorpayButtonProps
           alert(`✅ Payment Successful!\nPayment ID: ${response.razorpay_payment_id}`);
         },
         prefill: {
-          name: user.fullName || '',
-          email: user.primaryEmailAddress?.emailAddress || '',
-          contact: '', // optionally collect phone
+          name: user.fullName,
+          email: user.email,
+          contact: '',
         },
         notes: {
           plan: planName,
@@ -72,12 +75,6 @@ export default function RazorpayButton({ amount, planName }: RazorpayButtonProps
       console.error("Payment error:", err);
     }
   };
-
-  if (!isSignedIn) {
-    return (
-      <p className=" font-semibold animate-pulse text-red-500">Please sign in to subscribe to a plan.</p>
-    );
-  }
 
   return (
     <button

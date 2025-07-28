@@ -1,27 +1,22 @@
 "use client";
 
-import { useSignUp } from "@clerk/nextjs";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import  supabase  from '../utils/supabaseClient'; 
+
 
 
 
 export default function SignUpPage() {
-  const { signUp, setActive, isLoaded } = useSignUp();
-
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [code, setCode] = useState("");
- const [step, setStep] = useState("start");
-
+  const [username, setUsername] = useState('');
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -30,27 +25,24 @@ export default function SignUpPage() {
     }
 
     try {
-      await signUp.create({ emailAddress: email, password });
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setStep("verify");
-    } catch (err) {
-      setError(err.errors?.[0]?.message || "Signup failed");
-    }
-  };
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        
+      });
 
-  const handleVerify = async () => {
-    try {
-      const complete = await signUp.attemptEmailAddressVerification({ code });
-      if (complete.status === "complete") {
-        await setActive({ session: complete.createdSessionId });
-        window.location.href = "/Auth";
+      if (error) {
+        setError(error.message);
+        return;
       }
+
+      alert("✅ Signup successful! Please check your email to verify your account.");
     } catch (err) {
-      setError(err.errors?.[0]?.message || "Verification failed");
+      setError("Signup failed");
     }
   };
 
-  if (!isLoaded) return null;
+
 
   return (
     <div className="min-h-screen flex items-center justify-center background-col">
@@ -84,6 +76,22 @@ export default function SignUpPage() {
           <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
           <form onSubmit={handleSignUp} className="space-y-4">
+            
+            <div>
+                <label className="block text-sm font-medium text-black">
+                Username
+                </label>
+                <input
+                type="text"
+                placeholder="saran"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full px-4 py-2 hover:placeholder-fuchsia-600 border border-gray-300 rounded-2xl focus:outline-none focus:ring-1 focus:ring-pink-500"
+                />
+            </div>
+
+
             <div>
               <label className="block text-sm font-medium text-black">
                 Email
@@ -146,33 +154,12 @@ export default function SignUpPage() {
               <p className="text-red-500 text-sm text-center">{error}</p>
             )}
 
-            {step === "start" && (
-              <button
-                type="submit"
-                className="w-full hover:bg-pink-600  text-white py-2 cursor-pointer rounded-3xl bg-fuchsia-600 transitionn"
-              >
-                Sign Up
-              </button>
-            )}
-            <div id="clerk-captcha" />
-
-            {step === "verify" && (
-              <>
-                <input
-                  className="border p-2 hover:text-pink-600 rounded-3xl w-full"
-                  placeholder="Verification Code"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={handleVerify }
-                  className="mt-2 bg-green-600 cursor-pointer text-white w-full p-2 rounded-4xl"
-                >
-                  Verify Email
-                </button>
-              </>
-            )}
+            <button
+              type="submit"
+              className="w-full hover:bg-pink-600 text-white py-2 cursor-pointer rounded-3xl bg-fuchsia-600 transitionn"
+            >
+              Sign Up
+            </button>
           </form>
 
           <div className="mt-6 text-center">

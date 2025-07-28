@@ -10,6 +10,8 @@ export async function POST(req: Request) {
     key_secret: process.env.RAZORPAY_KEY_SECRET!,
   });
 
+
+  
   const options = {
     amount: amount * 100, // amount in paisa
     currency: 'INR',
